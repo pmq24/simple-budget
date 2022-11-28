@@ -2,6 +2,8 @@
 
 one:
   email: MyString
+  password_hash: MyString
 
 two:
   email: MyString
+  password_hash: MyString

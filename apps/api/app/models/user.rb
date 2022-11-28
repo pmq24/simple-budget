@@ -1,10 +1,10 @@
 class User < ApplicationRecord
-  validates(
-    :email,
-    presence: true,
-    uniqueness: true,
-    format: {
-      with: /\A[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}\z/,
-    },
-  )
+  validates :email,
+            presence: true,
+            uniqueness: true,
+            format: {
+              with: URI::MailTo::EMAIL_REGEXP,
+            }
+
+  validates :password_hash, presence: true
 end
