@@ -16,4 +16,10 @@ class UserTest < ActiveSupport::TestCase
   test 'should not save user when password hash is empty' do
     assert_not User.new(email: 'test@example.com').save
   end
+
+  test 'should not save user when email is already exists' do
+    email = 'test@example.com'
+    assert User.new(email: email, password_hash: 'abc').save
+    assert_not User.new(email: email, password_hash: 'abc').save
+  end
 end
