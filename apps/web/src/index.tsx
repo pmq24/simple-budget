@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SignUpPage from './pages/SignUpPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <ToastContainer position="bottom-left" />
   </React.StrictMode>
 );
 
