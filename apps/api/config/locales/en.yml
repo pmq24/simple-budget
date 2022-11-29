@@ -30,4 +30,17 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        password_hash: 'password'
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 'email is required'
+              invalid: 'email must follow the pattern `your.name@example.tld`'
+              taken: 'email is taken'
+            password_hash:
+              blank: 'password is required'
