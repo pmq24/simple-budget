@@ -41,4 +41,48 @@ class AuthController < ApplicationController
              'errors' => user.errors,
            }
   end
+
+  def log_in
+    body = JSON.parse request.body.read
+    email = body['email']
+    password = body['password']
+
+    errors = Hash.new
+
+    errors['email'] = ['email is required'] if email.blank?
+    errors['password'] = ['password is required'] if password.blank?
+
+    if not errors.empty?
+      render status: :bad_request,
+             json: {
+               'message' =>
+                 'the provided data is invalid, refer to `errors` for details',
+               'errors' => errors,
+             }
+      return
+    end
+
+    user = User.find_by_email email
+
+    if user.nil?
+      render status: :not_found,
+             json: {
+               'message' => "the account #{email} was not registered",
+             }
+      return
+    end
+
+    password_hash = Digest::SHA256.hexdigest password
+    if user.password_hash != password_hash
+      render status: :bad_request, json: { 'message' => 'wrong password' }
+      return
+    end
+
+    session[:user_id] = user.id
+
+    render status: :ok,
+           json: {
+             'message' => "logged in successfully, welcome back #{email}!",
+           }
+  end
 end
