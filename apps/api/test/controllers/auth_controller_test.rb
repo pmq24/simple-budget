@@ -71,4 +71,21 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
                       'Incorrect error message'
     end
   end
+
+  class LogInTest < ActionDispatch::IntegrationTest
+    test 'case 200' do
+      email = 'test@example.com'
+      password = 'abc'
+
+      post sign_up_url, params: { email: email, password: password }, as: :json
+
+      assert_response :success,
+                      'Failed to setup - User was not registered to the database'
+
+      post log_in_url, params: { email: email, password: password }, as: :json
+      assert_response :success, 'Failed to log in'
+      assert_not_nil controller.session[:user_id],
+                     'User ID was not persisted in session'
+    end
+  end
 end
